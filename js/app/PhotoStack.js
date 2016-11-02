@@ -2,14 +2,15 @@ define(function (require, exports, module) {
   var View = require('samsara/core/View');
   var Surface = require('samsara/dom/Surface');
   var Transform = require('samsara/core/Transform');
-  //var Scrollview = require('samsara/layouts/Scrollview');
+  var GenericInput = require('samsara/inputs/GenericInput');
+  var MouseInput = require('samsara/inputs/MouseInput');
+  var TouchInput = require('samsara/inputs/TouchInput');
+
   var Photo = require('./Photo');
 
   // ParallaxCats is a scrollview of ParallaxCat images
   var PhotoStack = View.extend({
     defaults: {
-      // skew : 0,
-      //parallaxAmount : ,
       width : '',
       height : '',
       urls : []
@@ -19,29 +20,25 @@ define(function (require, exports, module) {
       this.width = options.size[0]
       this.height = options.size[1]
 
+      // Register all the inputs we need
+      // Ids registered can be used globally in the application
+      GenericInput.register({
+         "mouse" : MouseInput,
+         "touch" : TouchInput
+      });
+
       // Create the photos
       var photos = [];
       for (var i = 0; i < options.urls.length; i++) {
         var photo = new Photo({
           src: options.urls[i],
           index: i,
-          size: [400,300]
+          size: [400,300],
+          windowDimensions: [this.width, this.height]
         });
 
-
-        this
-          .add({transform : Transform.translateX(this.getRandomInt(0,this.width))})
-          .add({transform : Transform.translateY(this.getRandomInt(0,this.height))})
-          .add({transform : Transform.rotateZ(this.getRandomRadian())})
-          .add(photo);
+        this.add(photo);
       }
-    },
-    getRandomInt: function (minInt, maxInt) {
-      return Math.floor(Math.random() * (maxInt - minInt)) + minInt;
-    },
-
-    getRandomRadian: function () {
-      return Math.random() * 2 * Math.PI;
     }
   });
 
