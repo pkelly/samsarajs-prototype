@@ -1,38 +1,51 @@
 define(function (require, exports, module) {
     var Context = require('samsara/dom/Context');
-    var MouseInput = require('samsara/inputs/MouseInput'); // wraps DOM mouse events
-    var TouchInput = require('samsara/inputs/TouchInput'); // wraps DOM touch events
-    var GenericInput = require('samsara/inputs/GenericInput'); // unifies multiple input sources
-    var App = require('./app/App'); // load our application view
+    var Carousel = require('./app/Carousel');
 
-    // Load [FT's fastclick](https://github.com/ftlabs/fastclick) for iOS devices to get around the 300ms click delay
+    // Install [FT's fastclick](https://github.com/ftlabs/fastclick) for iOS devices to get around the 300ms click delay
     var FastClick = require('./lib/fastClick');
     FastClick.attach(document.body);
 
-    // Register touch and mouse events for this application. GenericInput allows
-    // for a unified input interface for mobile and desktop applications.
-    GenericInput.register({
-        touch: TouchInput,
-        mouse: MouseInput
+    // Number of pages in the carousel
+    var N = 5;
+
+    // Create the carousel view with options
+    var carousel = new Carousel({
+        pages : N,
+        arrows : {
+            leftContent : '❮',  // content for the left arrow
+            rightContent : '❯', // content for the right arrow
+            hideTransition: {duration: 50}, // animation to hide the arrow
+            showTransition: {duration: 50}, // animation to show the arrow
+            hideOpacity: 0.2 // opacity when the arrow is hidden
+        },
+        dots : {
+            numDots : N,   // number of navigation dots
+            diameter : 10, // diameter of a dot in pixels
+            spacing : 4,   // spacing between the dots in pixels
+            fadeIn : {duration : 50}, // fadeIn transition for active dot
+            fadeOut: {duration: 50}   // fadeOut transition for active dot
+        },
+        scrollview : {
+            pageTransition : {       // Pagination transition
+                curve: 'spring',
+                period: 100,
+                damping: 0.8
+            },
+            edgeTransition: {        // Edge bounce transition (mobile only)
+                curve: 'spring',
+                period: 100,
+                damping: 1
+            }
+        }
     });
 
-    // Instantiate the application view with options.
-    var app = new App({
-        navHeightRatio: 0.1,   // percentage of screen height the nav bar takes
-        drawerLength: 250,     // how much to drag the content
-        drawerVelocityThreshold: 0.25,   // velocity to toggle a transition
-        transitionOpen: {curve: 'spring', period: 80, damping: 0.75}, // slide open transition
-        transitionClose: {curve: 'spring', period: 100, damping: 1}   // slide closed transition
-    });
-
-    // Create a 3D context DOM element to begin the render tree.
+    // Create a Samsara Context as the root of the render tree
     var context = new Context();
-    context.setPerspective(1000);
 
-    // Add the application view to the render tree.
-    context.add(app);
+    // Add the carousel to the context
+    context.add(carousel);
 
-    // Mount context to `document.body`
+    // Mount the context to a DOM node
     context.mount(document.body);
 });
-
