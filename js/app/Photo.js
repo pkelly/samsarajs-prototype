@@ -21,22 +21,19 @@ define(function(require, exports, module) {
               }
           });
 
-        	//debugger
-
            // Create photo
           var photo = new Surface({
               tagName : 'img',
               origin : options.origin,
-              //proportions : [1, false],
               size : options.size,
               attributes : {src : options.src}
           });
 
           // Build the render subtree inside the container
-            container.add(photo);
+          container.add(photo);
 
-            // Build the render subtree for the view
-            this.add(container);
+          // Build the render subtree for the view
+          this.add(container);
         }
     });
 

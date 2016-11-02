@@ -4,20 +4,31 @@ define(function (require, exports, module) {
     var Surface = require('samsara/dom/Surface');
     var Transitionable = require('samsara/core/Transitionable');
     var SequentialLayout = require('samsara/layouts/SequentialLayout');
+    var PhotoStack = require('../PhotoStack');
+
 
     var PeterView = View.extend({
         defaults: {
         },
         initialize: function (options) {
-            var surface = new Surface({
-                 content : 'PeterView',
-                 size : [],
-                 properties : {background : '#E59319', color: 'white'}
-             });
+            var urls = [
+                './assets/wedding1.jpg',
+                './assets/wedding2.jpg',
+                './assets/wedding3.jpg',
+                './assets/wedding4.jpg',
+                './assets/wedding5.jpg',
+                './assets/wedding6.jpg',
+                './assets/wedding7.jpg'
+            ];
 
-            this.add(surface);
-            }
-        });
+            var photoStack = new PhotoStack({
+                size : [window.innerWidth, window.innerHeight],
+                urls : urls
+            });
+
+            this.add(photoStack);
+        }
+    });
 
     module.exports = PeterView;
 });
