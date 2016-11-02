@@ -6,6 +6,7 @@ define(function (require, exports, module) {
     var JackieView = require('./screens/JackieView');
     var PeterView = require('./screens/PeterView');
     var JoshView = require('./screens/JoshView');
+    var NicoletteView = require('./screens/NicoletteView');
 
     var Dots = require('./Dots');
     var Arrows = require('./Arrows');
@@ -31,6 +32,7 @@ define(function (require, exports, module) {
             surfaces.push(new JackieView());
             surfaces.push(new PeterView());
             surfaces.push(new JoshView());
+            surfaces.push(new NicoletteView());
 
             // Add the surfaces to the carousel
             this.addItems(surfaces);

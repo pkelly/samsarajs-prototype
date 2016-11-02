@@ -5,19 +5,19 @@ define(function (require, exports, module) {
     var Transitionable = require('samsara/core/Transitionable');
     var SequentialLayout = require('samsara/layouts/SequentialLayout');
 
-    var JackieView = View.extend({
+    var NicoletteView = View.extend({
         defaults: {
         },
         initialize: function (options) {
             var surface = new Surface({
-                 content : 'JackieView',
+                 content : 'NicoletteView',
                  size : [],
-                 properties : {background : '#E51919', color: 'white'}
+                 properties : {background : '#E900E9', color: 'white'}
              });
 
             this.add(surface);
             }
         });
 
-    module.exports = JackieView;
+    module.exports = NicoletteView;
 });

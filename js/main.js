@@ -7,7 +7,7 @@ define(function (require, exports, module) {
     FastClick.attach(document.body);
 
     // Number of pages in the carousel
-    var N = 4;
+    var N = 5;
 
     // Create the carousel view with options
     var carousel = new Carousel({
