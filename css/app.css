@@ -16,6 +16,10 @@ body {
     background: black;
 }
 
+.cat {
+    border: 4px solid black;
+}
+
 .content {
     font-size: 40px;
     color : white;
