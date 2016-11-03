@@ -26,7 +26,7 @@ define(function (require, exports, module) {
             // Create the surfaces with uniformly graded hues
             var hue = 0;
             var surfaces = [];
-            
+
             surfaces.push(new PhilView());
             surfaces.push(new PeterView());
             surfaces.push(new JackieView());
