@@ -32,22 +32,22 @@ define(function (require, exports, module) {
       this.addTitle();
       this.addRSVP();
 
-      this.toggleAnimation();
+      this.toggleAnimation(true);
 
     },
 
     onShow: function() {
       console.log('onShow!!!!!!!');
-      this.toggleAnimation();
+      this.toggleAnimation(true);
     },
 
     onHide: function() {
       console.log('Hide!!!!!!!');
-      this.toggleAnimation();
+      this.toggleAnimation(false);
     },
 
-    toggleAnimation: function() {
-      var target = this.toggle ? 0 : 1;
+    toggleAnimation: function(isOn) {
+      var target = isOn ? 1 : 0;
       this.easingTransition.set(target, this.options.easingTransition);
       this.inertiaTransition.set(target, this.options.easingTransition);
 
@@ -57,7 +57,7 @@ define(function (require, exports, module) {
         _this.springTransition.set(target, _this.options.springTransition);
       }, delay);
 
-      this.toggle = !this.toggle;
+      this.firstRun = false;
     },
 
     addBackground: function() {
