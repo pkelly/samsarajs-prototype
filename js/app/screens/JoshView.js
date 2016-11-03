@@ -73,11 +73,13 @@ define(function (require, exports, module) {
 
 
 
-          var context = new ContainerSurface();
+          var myContext = this.myContext =  new ContainerSurface();
 
-          context.setPerspective(600);
+          setTimeout(function() {
+            myContext.setPerspective(600);
+          }, 0);
 
-          context.add({
+          myContext.add({
             transform: Transform.translateZ(100)
           }).add({
             transform: Transform.translateY(-400)
@@ -86,7 +88,7 @@ define(function (require, exports, module) {
               transform : rotation
           }).add(hall);
 
-          context.add({
+          myContext.add({
             transform: Transform.translateZ(100)
           }).add({
             transform: Transform.translateY(-100)
@@ -95,7 +97,7 @@ define(function (require, exports, module) {
               transform : rotation2
           }).add(hall2);
 
-          context.add({
+          myContext.add({
             transform: Transform.translateZ(100)
           }).add({
             transform: Transform.translateY(200)
@@ -106,8 +108,8 @@ define(function (require, exports, module) {
 
 
           angle.set(1000000, {duration: 10000000000})
-          this.add(context);
-        }
+          this.add(myContext);
+        },
 
     });
 

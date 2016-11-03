@@ -2,6 +2,7 @@ define(function (require, exports, module) {
     var View = require('samsara/core/View');
     var Transform = require('samsara/core/Transform');
     var Surface = require('samsara/dom/Surface');
+    var ContainerSurface = require('samsara/dom/ContainerSurface');
     var Transitionable = require('samsara/core/Transitionable');
     var SequentialLayout = require('samsara/layouts/SequentialLayout');
     var PhotoStack = require('../PhotoStack');
@@ -26,7 +27,11 @@ define(function (require, exports, module) {
                 urls : urls
             });
 
-            this.add(photoStack);
+            var container = new ContainerSurface();
+
+            container.add(photoStack);
+
+            this.add(container);
         }
     });
 
