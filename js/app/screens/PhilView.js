@@ -24,7 +24,7 @@ define(function (require, exports, module) {
       }
     },
     initialize: function (options) {
-      this.springTransition = new Transitionable(0);
+      this.springTransition = new Transitionable(1);
       this.easingTransition = new Transitionable(0);
       this.inertiaTransition = new Transitionable(0);
       this.firstRun = true;
@@ -49,12 +49,12 @@ define(function (require, exports, module) {
     },
 
     toggleAnimation: function(isOn) {
-      var target = isOn ? 1 : 0;
+      var target = isOn ? 0 : 1;
       this.easingTransition.set(target, this.options.easingTransition);
       this.inertiaTransition.set(target, this.options.easingTransition);
 
       var _this = this;
-      var delay = this.firstRun ? 350 : 0;
+      var delay = this.firstRun ? 550 : 0;
       setTimeout(function() {
         _this.springTransition.set(target, _this.options.springTransition);
       }, delay);
@@ -95,7 +95,8 @@ define(function (require, exports, module) {
         size: [false, true],
         properties: {
           fontFamily: 'Source Sans Pro',
-          fontSize: '20px',
+          fontSize: '24px',
+          fontWeight: 'bold',
           color: 'white',
           textAlign: 'center'
         },
@@ -103,15 +104,15 @@ define(function (require, exports, module) {
       });
 
       this.container.add({
-        align: [.5, -.1],
+        align: [.5, .03],
         transform: this.springTransition.map(function (value) {
-          return Transform.translateY(value * 80.0);
+          return Transform.translateY(value * -400);
         })
       }).add(title);
       this.container.add({
-        align: [.5, -.1],
+        align: [.5, .1],
         transform: this.springTransition.map(function (value) {
-          return Transform.translateY(value * 120.0);
+          return Transform.translateY(value * -200);
         })
       }).add(subtitle);
     },
@@ -122,18 +123,35 @@ define(function (require, exports, module) {
         size: [false, true],
         properties: {
           fontFamily: 'Source Sans Pro',
-          fontSize: '20px',
+          fontSize: '22px',
+          fontWeight: 'bold',
           color: 'white',
           textAlign: 'center'
         },
         origin: [.5, 0]
       });
+
+      var rsvpBtn = new Surface({
+        tagName: 'button',
+        classes: ['rsvp-link'],
+        size: [true, true],
+        content: '<span>RSVP</span>',
+        origin: [.5, .5]
+      });
+
       this.container.add({
-        align: [1.5, .3],
+        align: [.5, .2],
         transform: this.springTransition.map(function (value) {
-          return Transform.translateX(value * -370.0);
+          return Transform.translateX(value * 300);
         })
       }).add(dateText);
+
+      this.container.add({
+        align: [.5, .35],
+        transform: this.springTransition.map(function (value) {
+          return Transform.translateX(value * 300);
+        })
+      }).add(rsvpBtn);
     }
   });
   module.exports = PhilView;

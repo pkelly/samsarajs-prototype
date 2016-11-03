@@ -1,4 +1,5 @@
 @import url("PhotoStack.css");
+@import url("Theme.css");
 
 * {
     -webkit-user-callout: none;
