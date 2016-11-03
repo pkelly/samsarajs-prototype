@@ -20,6 +20,8 @@ define(function (require, exports, module) {
       this.width = options.size[0]
       this.height = options.size[1]
 
+      this.zindex = 100;
+
       // Register all the inputs we need
       // Ids registered can be used globally in the application
       GenericInput.register({
@@ -28,17 +30,29 @@ define(function (require, exports, module) {
       });
 
       // Create the photos
-      var photos = [];
+      this.photos = [];
       for (var i = 0; i < options.urls.length; i++) {
         var photo = new Photo({
           src: options.urls[i],
           index: i,
-          size: [400,300],
+          'z-index': i,
+          size: [250,175],
           windowDimensions: [this.width, this.height]
+        });
+
+        this.photos.push(photo);
+
+        var that = this;
+        photo.on('click', function(){
+          that.movePhotoToFront(this);
         });
 
         this.add(photo);
       }
+    },
+
+    movePhotoToFront: function(photo) {
+      photo.container.setProperties({'z-index': ++this.zindex});
     }
   });
 
