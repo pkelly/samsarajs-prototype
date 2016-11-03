@@ -41,12 +41,10 @@ define(function (require, exports, module) {
     },
 
     onShow: function() {
-      console.log('onShow!!!!!!!');
       this.toggleAnimation(true);
     },
 
     onHide: function() {
-      console.log('Hide!!!!!!!');
       this.toggleAnimation(false);
     },
 
