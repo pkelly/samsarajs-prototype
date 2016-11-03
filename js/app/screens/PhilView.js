@@ -28,13 +28,16 @@ define(function (require, exports, module) {
       this.easingTransition = new Transitionable(0);
       this.inertiaTransition = new Transitionable(0);
       this.firstRun = true;
-      this.container = new ContainerSurface();
+      this.container = new ContainerSurface({
+        size : [Math.min(450, window.innerWidth), undefined],
+        origin: [.5, 0]
+      });
 
       this.addBackground();
       this.addTitle();
       this.addRSVP();
 
-      this.add(this.container);
+      this.add({align: [0.5, 0]}).add(this.container);
 
       this.toggleAnimation(true);
 
@@ -142,14 +145,14 @@ define(function (require, exports, module) {
       this.container.add({
         align: [.5, .2],
         transform: this.springTransition.map(function (value) {
-          return Transform.translateX(value * 300);
+          return Transform.translateX(value * 600);
         })
       }).add(dateText);
 
       this.container.add({
         align: [.5, .35],
         transform: this.springTransition.map(function (value) {
-          return Transform.translateX(value * 300);
+          return Transform.translateX(value * 400);
         })
       }).add(rsvpBtn);
     }
