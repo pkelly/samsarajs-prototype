@@ -55,7 +55,8 @@ define(function (require, exports, module) {
           "http://i.imgur.com/vloPjNa.jpg",
           "http://imgur.com/H2mby53.jpg",
           "http://i.imgur.com/eXUsDio.png",
-          "http://i.imgur.com/41qSbCP.jpg"
+          "http://i.imgur.com/41qSbCP.jpg",
+          "https://i.imgur.com/aObL4Rg.jpg"
 
           ]
 
