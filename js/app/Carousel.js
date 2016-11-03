@@ -66,6 +66,19 @@ define(function (require, exports, module) {
             // Update the current page in case the user has changed
             // it by scrolling
             this.scrollview.on('page', function (index) {
+                this.scrollview.items.forEach(function(view, viewIndex) {
+                    if (index === viewIndex) {
+                        if (view.onShow) {
+                            view.onShow();
+                        }
+                    }
+                    else {
+                        if (view.onHide) {
+                            view.onHide();
+                        }
+                    }
+                });
+
                 this.currentPage = index;
                 this.dots.goTo(index);
             }.bind(this));
