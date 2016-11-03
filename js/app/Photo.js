@@ -70,8 +70,8 @@ define(function(require, exports, module) {
         this
         	.add({transform : Transform.translateX(Utils.getRandomInt(0, this.windowWidth))})
           .add({transform : Transform.translateY(Utils.getRandomInt(0, this.windowHeight))})
-          .add({transform : Transform.rotateZ(Utils.getRandomRadian())})
         	.add({transform : drag})
+        	.add({transform : Transform.rotateZ(Utils.getRandomRadian())})
         	.add(container);
         }
     });

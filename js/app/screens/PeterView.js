@@ -9,8 +9,6 @@ define(function (require, exports, module) {
 
 
     var PeterView = View.extend({
-        defaults: {
-        },
         initialize: function (options) {
             var urls = [
                 './assets/wedding1.jpg',
