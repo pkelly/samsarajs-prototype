@@ -93,7 +93,7 @@ define(function (require, exports, module) {
             var size = [N * diameter + (N - 1) * spacing, diameter];
 
             // Center and align towards the bottom
-            this.add({align: [.5, .9]})
+            this.add({align: [.5, .95]})
                 .add({size: size, origin: [.5, .5]}) // define origin point and size of dots view
                 .add(this.dots);
         },
