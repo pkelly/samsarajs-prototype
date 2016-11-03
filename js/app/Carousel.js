@@ -6,7 +6,6 @@ define(function (require, exports, module) {
     var JackieView = require('./screens/JackieView');
     var PeterView = require('./screens/PeterView');
     var JoshView = require('./screens/JoshView');
-    var NicoletteView = require('./screens/NicoletteView');
 
     var Dots = require('./Dots');
     var Arrows = require('./Arrows');
@@ -28,11 +27,10 @@ define(function (require, exports, module) {
             var hue = 0;
             var surfaces = [];
 
-            surfaces.push(new PeterView());
             surfaces.push(new PhilView());
+            surfaces.push(new PeterView());
             surfaces.push(new JackieView());
             surfaces.push(new JoshView());
-            surfaces.push(new NicoletteView());
 
             // Add the surfaces to the carousel
             this.addItems(surfaces);
@@ -66,6 +64,19 @@ define(function (require, exports, module) {
             // Update the current page in case the user has changed
             // it by scrolling
             this.scrollview.on('page', function (index) {
+                this.scrollview.items.forEach(function(view, viewIndex) {
+                    if (index === viewIndex) {
+                        if (view.onShow) {
+                            view.onShow();
+                        }
+                    }
+                    else {
+                        if (view.onHide) {
+                            view.onHide();
+                        }
+                    }
+                });
+
                 this.currentPage = index;
                 this.dots.goTo(index);
             }.bind(this));

@@ -2,6 +2,7 @@ define(function (require, exports, module) {
   var View = require('samsara/core/View');
   var Transform = require('samsara/core/Transform');
   var Surface = require('samsara/dom/Surface');
+  var ContainerSurface = require('samsara/dom/ContainerSurface');
   var Transitionable = require('samsara/core/Transitionable');
   var SequentialLayout = require('samsara/layouts/SequentialLayout');
 
@@ -26,13 +27,44 @@ define(function (require, exports, module) {
       this.springTransition = new Transitionable(0);
       this.easingTransition = new Transitionable(0);
       this.inertiaTransition = new Transitionable(0);
+      this.firstRun = true;
+      this.container = new ContainerSurface();
 
-      var surface = new Surface({
-         content : 'PhilView',
-         size : [],
-         properties : {background : '#3651FE', color: 'white'}
-       });
+      this.addBackground();
+      this.addTitle();
+      this.addRSVP();
 
+      this.add(this.container);
+
+      this.toggleAnimation(true);
+
+    },
+
+    onShow: function() {
+      console.log('onShow!!!!!!!');
+      this.toggleAnimation(true);
+    },
+
+    onHide: function() {
+      console.log('Hide!!!!!!!');
+      this.toggleAnimation(false);
+    },
+
+    toggleAnimation: function(isOn) {
+      var target = isOn ? 1 : 0;
+      this.easingTransition.set(target, this.options.easingTransition);
+      this.inertiaTransition.set(target, this.options.easingTransition);
+
+      var _this = this;
+      var delay = this.firstRun ? 350 : 0;
+      setTimeout(function() {
+        _this.springTransition.set(target, _this.options.springTransition);
+      }, delay);
+
+      this.firstRun = false;
+    },
+
+    addBackground: function() {
       var opacity = new Transitionable(0);
 
       var van = new Surface({
@@ -42,7 +74,11 @@ define(function (require, exports, module) {
         aspectRatio : 9/16,
         attributes : {src : './assets/van-cropped.jpg'}
       });
+      opacity.set(1, {curve: 'easeIn', duration: 500});
+      this.container.add(van);
+    },
 
+    addTitle: function() {
       var title = new Surface({
         content: 'Laura and Andrew',
         size: [false, true],
@@ -57,7 +93,7 @@ define(function (require, exports, module) {
       });
 
       var subtitle = new Surface({
-        content: 'July 22, 2017 &emsp; Ilkley, West Yorkshire',
+        content: 'Ilkley, West Yorkshire',
         size: [false, true],
         properties: {
           fontFamily: 'Source Sans Pro',
@@ -68,32 +104,39 @@ define(function (require, exports, module) {
         origin: [.5, 0]
       });
 
-      opacity.set(1, {curve: 'easeIn', duration: 500});
-      this.easingTransition.set(1, this.options.easingTransition);
-      this.inertiaTransition.set(1, this.options.easingTransition);
-
-      var _this = this;
-      setTimeout(function() {
-        _this.springTransition.set(1, _this.options.springTransition);
-      }, 350);
-
-
-
-      this.add(van);
-      this.add({
+      this.container.add({
         align: [.5, -.1],
         transform: this.springTransition.map(function (value) {
           return Transform.translateY(value * 80.0);
         })
       }).add(title);
-      this.add({
+      this.container.add({
         align: [.5, -.1],
         transform: this.springTransition.map(function (value) {
           return Transform.translateY(value * 120.0);
         })
       }).add(subtitle);
-      }
-    });
+    },
 
+    addRSVP: function() {
+      var dateText = new Surface({
+        content: 'Saturday, July 22, 2017<br>1:00 PM',
+        size: [false, true],
+        properties: {
+          fontFamily: 'Source Sans Pro',
+          fontSize: '20px',
+          color: 'white',
+          textAlign: 'center'
+        },
+        origin: [.5, 0]
+      });
+      this.container.add({
+        align: [1.5, .3],
+        transform: this.springTransition.map(function (value) {
+          return Transform.translateX(value * -370.0);
+        })
+      }).add(dateText);
+    }
+  });
   module.exports = PhilView;
 });
