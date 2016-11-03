@@ -28,8 +28,8 @@ define(function (require, exports, module) {
             var surfaces = [];
 
             surfaces.push(new PhilView());
-            surfaces.push(new PeterView());
             surfaces.push(new JackieView());
+            surfaces.push(new PeterView());
             surfaces.push(new JoshView());
 
             // Add the surfaces to the carousel
