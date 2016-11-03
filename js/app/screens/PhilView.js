@@ -54,7 +54,7 @@ define(function (require, exports, module) {
       this.inertiaTransition.set(target, this.options.easingTransition);
 
       var _this = this;
-      var delay = this.firstRun ? 550 : 0;
+      var delay = this.firstRun ? 1000 : 0;
       setTimeout(function() {
         _this.springTransition.set(target, _this.options.springTransition);
       }, delay);
