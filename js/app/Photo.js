@@ -5,12 +5,10 @@ define(function(require, exports, module) {
     var ContainerSurface = require('samsara/dom/ContainerSurface');
     var GenericInput = require('samsara/inputs/GenericInput');
     var Utils = require('js/app/utils/PhotoStackUtils');
+    var Transitionable = require('samsara/core/Transitionable');
 
 
     var Photo = View.extend({
-    	defaults : {
-        index : 0,
-      },
 
       initialize: function (options) {
       	this.windowDimensions = options.windowDimensions;
@@ -28,12 +26,14 @@ define(function(require, exports, module) {
         // `overflow : hidden` to clip the content
       	var container = new ContainerSurface({
             classes: ['photostack-photo'],
+            origin : [.5,.5],
             properties: {
-            	overflow: 'hidden'
+            	overflow: 'hidden',
+            	'z-index': options['z-index']
             }
         });
 
-        // container.setProperties({ 'z-index': '1' });
+        this.container = container;
 
         // Build the render subtree inside the container
         container
@@ -51,27 +51,48 @@ define(function(require, exports, module) {
         // gestureInput now listens to the DOM events originating from the surface
       	gestureInput.subscribe(container);
 
-      	// gestureInput.on('start', function(payload){ 
-      	// console.log('start')            
-       //    container.toggleClass('photostack-dragging');
-       //  });
-
-      	// gestureInput.on('end', function(payload){         
-      	// 	console.log('end')
-       //    container.toggleClass('photostack-photo');
-       //  });
-
       	var drag = gestureInput.map(function(data){
-	          return Transform.translate(data.cumulate);
-	          
+	        return Transform.translate(data.cumulate);
 	      });
+
+	      var t = new Transitionable(0); // define a transitionable with initial value 0
+	      var t2 = new Transitionable(0); // define a transitionable with initial value 0
+	      var t3 = new Transitionable(0); // define a transitionable with initial value 0
+
+	      var clickRotate = t.map(function(angle) {
+	      	return Transform.rotateZ(-angle);
+	      });
+
+	      var clickCenterX = t2.map(function(amt) {
+	      	
+	      	return Transform.translateX(amt);
+	      });
+
+	      var clickCenterY = t3.map(function(amt) {
+	      	return Transform.translateY(amt);
+	      });
+
+	      var that = this;
+	      container.on('click', function() {
+      		t.set(that.rotation, {curve : 'easeInOut', duration : 700});
+      		//t2.set(100, {curve : 'easeInOut', duration : 700});
+      		//t3.set(100, {curve : 'easeInOut', duration : 700});
+      		that.emit('click');
+        });
+
+       	this.rotation = Utils.getRandomRadian();
 
         // Build the render subtree for the view
         this
         	.add({transform : Transform.translateX(Utils.getRandomInt(0, this.windowWidth))})
           .add({transform : Transform.translateY(Utils.getRandomInt(0, this.windowHeight))})
         	.add({transform : drag})
-        	.add({transform : Transform.rotateZ(Utils.getRandomRadian())})
+        	.add({transform : Transform.rotateZ(this.rotation)})
+
+        	.add({transform : clickRotate})
+        	.add({transform : clickCenterX})
+        	.add({transform : clickCenterY})
+        	
         	.add(container);
         }
     });
