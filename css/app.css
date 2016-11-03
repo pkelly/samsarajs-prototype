@@ -35,6 +35,7 @@ body {
     font-size: 13vh;
     font-weight: bold;
     z-index: 1;
+    opacity: 0;
     cursor: pointer;
     padding : 20px;
 }

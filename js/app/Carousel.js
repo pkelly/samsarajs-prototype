@@ -2,6 +2,8 @@ define(function (require, exports, module) {
     var View = require('samsara/core/View');
     var Surface = require('samsara/dom/Surface');
     var Scrollview = require('samsara/layouts/Scrollview');
+    var Transitionable = require('samsara/core/Transitionable');
+
     var PhilView = require('./screens/PhilView');
     var JackieView = require('./screens/JackieView');
     var PeterView = require('./screens/PeterView');
@@ -51,7 +53,9 @@ define(function (require, exports, module) {
             }.bind(this));
 
             // Add the arrows the render subtree
-            this.add(this.arrows);
+            var opacity = new Transitionable(0);
+            opacity.set(1, {curve: 'easeIn', duration: 1000});
+            this.add({opacity: opacity}).add(this.arrows);
         },
         createScrollview : function(options){
             // Patch the options with necessary defaults
