@@ -28,9 +28,9 @@ define(function (require, exports, module) {
             var hue = 0;
             var surfaces = [];
 
+            surfaces.push(new PeterView());
             surfaces.push(new PhilView());
             surfaces.push(new JackieView());
-            surfaces.push(new PeterView());
             surfaces.push(new JoshView());
             surfaces.push(new NicoletteView());
 
